@@ -27,26 +27,11 @@ public class NthDigit {
 
         p--;
 
-        int missing = n - sum;
+        int more = (n - 1) / (p + 1);
 
-        if (missing == 0) {
-            return getLast((int) (Math.pow(10, p + 1) - 1));
-        }
+        int target = sum + more;
 
-        int which = missing / (p + 1);
-
-        int moreMissing = missing - (p + 1) * which;
-
-        if (moreMissing == 0) {
-            return getLast((int) Math.pow(10, p) + which - 1);
-        }
-
-        return getDigitInNumber((int) Math.pow(10, p) + which, moreMissing);
-    }
-
-    private int getLast(int number) {
-        String s = String.valueOf(number);
-        return getDigitInNumber(number, s.length());
+        return getDigitInNumber(target, (n - 1) % (p + 1));
     }
 
     private int getDigitInNumber(int number, int index) {
@@ -60,6 +45,6 @@ public class NthDigit {
     public static void main(String[] args) {
         NthDigit nthDigit = new NthDigit();
 
-        System.out.println(nthDigit.findNthDigit(100));
+        System.out.println(nthDigit.findNthDigit(3));
     }
 }

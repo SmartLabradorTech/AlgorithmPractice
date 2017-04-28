@@ -1,15 +1,13 @@
 package array.Combination;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
- * Created by tianle on 3/25/17.
+ * Created by tianle on 3/26/17.
  */
-public class DistinctIntegers {
+public class DuplicatedIntegers {
 
-    // print all combinations of given list of integers. Input has no duplications.
+    // print all combinations of given list of integers. Input may have duplications.
 
     public void print(List<Integer> input) {
         if (input == null || input.isEmpty()) {
@@ -18,6 +16,13 @@ public class DistinctIntegers {
 
         System.out.println("Going to print all combination of " + input);
 
+        Map<Integer, Integer> occur = new HashMap<>();
+
+        for (Integer element : input) {
+            Integer times = occur.getOrDefault(element, 0);
+            occur.put(element, ++times);
+        }
+
         List<Integer> combination = new ArrayList<>();
 
         for (int i = 0; i < input.size(); i++) {
@@ -25,7 +30,9 @@ public class DistinctIntegers {
         }
     }
 
-    private void print(List<Integer> input, List<Integer> current, int start, int neededLength) {
+    private void print(List<Integer> input,
+                       List<Integer> current,
+                       int start, int neededLength) {
         if (0 == neededLength) {
             System.out.println(current);
             return;
@@ -48,9 +55,9 @@ public class DistinctIntegers {
         DistinctIntegers distinctIntegers = new DistinctIntegers();
         distinctIntegers.print(Arrays.asList(1));
 
-        distinctIntegers.print(Arrays.asList(1, 2));
+        distinctIntegers.print(Arrays.asList(1, 1));
 
-        distinctIntegers.print(Arrays.asList(1, 2, 3));
+        distinctIntegers.print(Arrays.asList(1, 2, 2));
 
     }
 }

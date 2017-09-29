@@ -1,7 +1,9 @@
 package graph.CircleDetection;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,11 +14,60 @@ import java.util.Set;
  */
 public class CircleDetection {
 
-    public boolean hasCircle(int n, int[][] edges) {
+    private List<Integer> visited = new ArrayList<>();
+    private Set<Integer> scheduled = new HashSet<>();
 
-        Set<Integer> candidates = new HashSet<>();
+    public boolean detect(Map<Integer, Set<Integer>> graph) {
+        for (int vertex : graph.keySet()) {
+            boolean start = start(vertex, graph);
 
-        // parse the graph
+            if (start) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean start(int vertex, Map<Integer, Set<Integer>> graph) {
+        if (visited.contains(vertex)) {
+
+            if (scheduled.contains(vertex)) {
+                return false;
+            }
+
+            // circle found
+            return true;
+        }
+
+        visited.add(vertex);
+
+        Set<Integer> children = graph.get(vertex);
+
+        if (children == null || children.isEmpty()) {
+            // reach a leaf
+            scheduled.add(vertex);
+            // finish this path, no circle found for this route
+            return false;
+        }
+
+        for (int child : children) {
+            boolean start = start(child, graph);
+
+            if (start) {
+                return true;
+            }
+        }
+
+        // all children have been added
+        scheduled.add(vertex);
+
+        return false;
+    }
+
+    public Map<Integer, Set<Integer>> convert(int[][] edges) {
+
+        int n = edges.length;
 
         Map<Integer, Set<Integer>> graph = new HashMap<>();
 
@@ -34,18 +85,45 @@ public class CircleDetection {
             prerequests.add(end);
         }
 
-        for (int start : graph.keySet()) {
-
-
-        }
-
-        return false;
+        return graph;
     }
 
+    public int[][] create() {
+        return new int[][]{
+                {1, 0},
+                {0, 2},
+                {3, 1}
+        };
+    }
 
+    public int[][] create2() {
+        return new int[][]{
+                {1, 0},
+                {0, 2},
+                {3, 1},
+                {2, 3}
+        };
+    }
 
-    private boolean canReachSelf(int start, Map<Integer, Set<Integer>> graph, Set<Integer> path) {
+    public int[][] create3() {
+        return new int[][]{
+                {1, 0},
+                {0, 2},
+                {3, 1},
+                {2, 3},
+                {4, 5},
+        };
+    }
 
-        return false;
+    public int[][] create4() {
+        return new int[][]{
+                {1, 0}
+        };
+    }
+
+    public static void main(String[] args) {
+        CircleDetection circleDetection = new CircleDetection();
+
+        System.out.println(circleDetection.detect(circleDetection.convert(circleDetection.create4())));
     }
 }

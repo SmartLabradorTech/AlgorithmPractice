@@ -10,20 +10,62 @@ import java.util.*;
 
 public class CourseSchedule {
 
-    private class ParseResult {
-        Map<Integer, Set<Integer>> graph;
-        Set<Integer> canStart;
+    private List<Integer> visited = new ArrayList<>();
+    private Set<Integer> scheduled = new HashSet<>();
+
+    private boolean detect(Map<Integer, Set<Integer>> graph) {
+        for (int vertex : graph.keySet()) {
+            boolean start = start(vertex, graph);
+
+            if (start) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    private ParseResult convert(int[][] edges) {
+    private boolean start(int vertex, Map<Integer, Set<Integer>> graph) {
+        if (visited.contains(vertex)) {
+
+            if (scheduled.contains(vertex)) {
+                return false;
+            }
+
+            // circle found
+            return true;
+        }
+
+        visited.add(vertex);
+
+        Set<Integer> children = graph.get(vertex);
+
+        if (children == null || children.isEmpty()) {
+            // reach a leaf
+            scheduled.add(vertex);
+            // finish this path, no circle found for this route
+            return false;
+        }
+
+        for (int child : children) {
+            boolean start = start(child, graph);
+
+            if (start) {
+                return true;
+            }
+        }
+
+        // all children have been added
+        scheduled.add(vertex);
+
+        return false;
+    }
+
+    private Map<Integer, Set<Integer>> convert(int[][] edges) {
 
         int n = edges.length;
 
         Map<Integer, Set<Integer>> graph = new HashMap<>();
-
-        Set<Integer> canStart = new HashSet<>();
-
-        Set<Integer> cannotStart = new HashSet<>();
 
         for (int i = 0; i < n; i++) {
             int start = edges[i][0];
@@ -37,66 +79,9 @@ public class CourseSchedule {
             }
 
             prerequests.add(end);
-
-            cannotStart.add(end);
-            canStart.remove(end);
-
-            if (cannotStart.contains(start)) {
-                canStart.remove(start);
-            } else {
-                canStart.add(start);
-            }
-
         }
 
-        ParseResult parseResult = new ParseResult();
-        parseResult.graph = graph;
-        parseResult.canStart = canStart;
-
-        return parseResult;
-    }
-
-    private boolean print(Map<Integer, Set<Integer>> graph, Set<Integer> canStart) {
-        for (int start : canStart) {
-            boolean print = print(start, graph, new ArrayList<>());
-
-            if (print) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean inside(List<Integer> path, int element) {
-        return path.contains(element);
-    }
-
-    private boolean print(int current, Map<Integer, Set<Integer>> graph, List<Integer> path) {
-        if (inside(path, current)) {
-            return true;
-        }
-
-        path.add(current);
-
-        Set<Integer> nexts = graph.get(current);
-
-        if (nexts == null) {
-            System.out.println(path);
-            return false;
-        }
-
-        for (int node : nexts) {
-            boolean print = print(node, graph, path);
-
-            if (print) {
-                return true;
-            }
-
-            path.remove(path.size() - 1);
-        }
-
-        return false;
+        return graph;
     }
 
     public boolean canFinish(int numCourses, int[][] prerequisites) {
@@ -104,28 +89,6 @@ public class CourseSchedule {
             return true;
         }
 
-        ParseResult convert = convert(prerequisites);
-
-        if (convert.canStart.isEmpty()) {
-            return false;
-        }
-
-        return !print(convert.graph, convert.canStart);
+        return !detect(convert(prerequisites));
     }
-
-    public int[][] create2() {
-        return new int[][]{
-                {1, 0},
-                {0, 2},
-                {3, 1},
-                {2, 3}
-        };
-    }
-
-    public static void main(String[] args) {
-        CourseSchedule d = new CourseSchedule();
-
-//        System.out.println(d.print(d.convert(d.create2())));
-    }
-
 }

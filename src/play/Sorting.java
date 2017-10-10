@@ -12,6 +12,6 @@ public class Sorting {
 //        int[] a = {1, 5, 7, 10};
 
         int[] a = {2, 3};
-        System.out.println(Arrays.binarySearch(a, 0, 1, 3));
+        System.out.println(Arrays.binarySearch(a, 0, 0, 3));
     }
 }

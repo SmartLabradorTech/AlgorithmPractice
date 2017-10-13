@@ -28,18 +28,27 @@ public class RangeSumQuery {
         }
     }
 
+    // This can take up to O(N^2) time complexity. Can we improve this?
     public void update(int i, int val) {
-        for (int p = 0; p <= i; p++) {
-            for (int q = i; q < nums.length; q++) {
-                sums[p][q] -= nums[i];
-                sums[p][q] += val;
-            }
-        }
+//        for (int p = 0; p <= i; p++) {
+//            for (int q = i; q < nums.length; q++) {
+//                sums[p][q] -= nums[i];
+//                sums[p][q] += val;
+//            }
+//        }
+//
+//        nums[i] = val;
 
         nums[i] = val;
     }
 
     public int sumRange(int i, int j) {
-        return sums[i][j];
+        int sum = 0;
+
+        for (int p = i; p <= j; p++) {
+            sum += nums[p];
+        }
+
+        return sum;
     }
 }

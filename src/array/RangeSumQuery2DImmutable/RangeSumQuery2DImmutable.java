@@ -7,6 +7,10 @@ package array.RangeSumQuery2DImmutable;
  */
 public class RangeSumQuery2DImmutable {
 
+    /*
+    * The current approach will time out. We will need to improve.
+    * */
+
     private int[][] matrix;
 
     public RangeSumQuery2DImmutable(int[][] matrix) {

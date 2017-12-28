@@ -38,24 +38,21 @@ public class RemoveDuplicateLetters {
         Set<Character> visited = new HashSet<>();
 
         List<Character> result = new ArrayList<>();
-        char firstChar = s.charAt(0);
-        result.add(firstChar);
-        counts.put(firstChar, counts.get(firstChar) - 1);
-        visited.add(firstChar);
 
-        for (int i = 1; i < length; i++) {
+        for (int i = 0; i < length; i++) {
 
             char currentChar = s.charAt(i);
 
             if (visited.contains(currentChar)) {
+                // remember to decrease!
                 counts.put(currentChar, counts.get(currentChar) - 1);
-
                 continue;
             }
 
             for (int j = result.size() - 1; j >= 0; j--) {
                 char previousChar = result.get(j);
 
+                // In this case, we can no longer propagate as it is blocked.
                 if (counts.get(previousChar) == 0) {
                     break;
                 }

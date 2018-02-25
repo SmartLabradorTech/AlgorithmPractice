@@ -26,7 +26,7 @@ public class LastDayWithBlockSize {
             value[schedule[i]] = 1;
             boolean hasSize = hasSize(value, length, k);
 
-            System.out.println(Arrays.toString(value) + ", result is " + hasSize);
+//            System.out.println(Arrays.toString(value) + ", result is " + hasSize);
 
             if (hasSize) {
                 lastDay = Math.max(lastDay, i);

@@ -1,7 +1,5 @@
 package array.LastDayWithBlockSize;
 
-import java.util.Arrays;
-
 /**
  * Created by tianle on 2/23/18.
  */
@@ -61,7 +59,7 @@ public class LastDayWithBlockSize {
         LastDayWithBlockSize d = new LastDayWithBlockSize();
 
         int[] ints = {3, 1, 5, 4, 2};
-        int k = 5;
+        int k = 1;
 
         System.out.println(d.lastDay(ints, k));
     }

@@ -2,7 +2,6 @@ package Tree.DepthFirstSearch;
 
 import utils.TreeNode;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,7 +48,7 @@ public class DepthFirstSearch {
         }
 
         System.out.println("Visit " + root.value);
-        visited.add(root);
+//        visited.add(root);
 
         dfs(root.left);
         dfs(root.right);

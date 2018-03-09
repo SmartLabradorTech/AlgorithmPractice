@@ -58,8 +58,8 @@ public class SplitUberEats {
 //        double[] ints = {15.99, 9.99, 14.99};
 //        double total = 52.60;
 
-        double[] ints = {21.99, 9.99, 14.99, 13.99};
-        double total = 74.61;
+        double[] ints = {8.99, 9.99, 11.99, 11.99};
+        double total = 53.89;
 
         splitUberEats.split(ints, total);
 

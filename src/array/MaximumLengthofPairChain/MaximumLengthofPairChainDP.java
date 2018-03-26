@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 /**
  * Created by tianle on 3/24/18.
- *
- * doesn't work
+ * <p>
+ * https://leetcode.com/problems/maximum-length-of-pair-chain/description/#
  */
 public class MaximumLengthofPairChainDP {
     public int findLongestChain(int[][] pairs) {
@@ -20,15 +20,31 @@ public class MaximumLengthofPairChainDP {
             return diff;
         });
 
+        int length = pairs.length;
+
+        // it means if current interval is included, what is the max
+        int[] tillNow = new int[length];
+        tillNow[0] = 1;
+
         int max = 1;
 
-        int rightBoundary = pairs[0][1];
+        for (int i = 1; i < length; i++) {
+            int left = pairs[i][0];
+            int right = pairs[i][1];
 
-        for (int i = 1; i < pairs.length; i++) {
-            if (pairs[i][0] > rightBoundary) {
-                max++;
-                rightBoundary = pairs[i][1];
+            int maxSoFar = 0;
+
+            for (int j = 0; j < i; j++) {
+                if (left > pairs[j][1]) {
+                    maxSoFar = Math.max(maxSoFar, tillNow[j]);
+                }
             }
+
+            maxSoFar++;
+
+            max = Math.max(max, maxSoFar);
+
+            tillNow[i] = maxSoFar;
         }
 
         return max;
@@ -50,16 +66,20 @@ public class MaximumLengthofPairChainDP {
         return ints;
     }
 
-    public static void main(String[] args) {
-
-        MaximumLengthofPairChainDP dp = new MaximumLengthofPairChainDP();
-
+    private int[][] test2() {
         int[][] input = {
                 {1, 2},
                 {2, 3},
                 {3, 4}
         };
 
-        System.out.println(dp.findLongestChain(dp.test1()));
+        return input;
+    }
+
+    public static void main(String[] args) {
+
+        MaximumLengthofPairChainDP dp = new MaximumLengthofPairChainDP();
+
+        System.out.println(dp.findLongestChain(dp.test2()));
     }
 }

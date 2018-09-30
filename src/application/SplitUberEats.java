@@ -19,7 +19,7 @@ public class SplitUberEats {
 
         for (int i = 0; i < length; i++) {
             double fee = orders[i] / sum * total;
-            fee += 0.01;
+//            fee += 0.01;
 
             DecimalFormat df = new DecimalFormat("#.##");
 
@@ -58,8 +58,8 @@ public class SplitUberEats {
 //        double[] ints = {15.99, 9.99, 14.99};
 //        double total = 52.60;
 
-        double[] ints = {11.99, 9.99, 8.99};
-        double total = 41.80;
+        double[] ints = {9.99, 9.99, 9.99, 11.99, 20.99, 12.99};
+        double total = 91.10;
 
         splitUberEats.split(ints, total);
 

@@ -24,6 +24,9 @@ public class StringsRelated {
         Arrays.sort(objects);
 
         print(objects);
+
+
+        System.out.println("last is " + a.substring(0, 0) + "%%%");
     }
 
     public static void print(String[] array) {
